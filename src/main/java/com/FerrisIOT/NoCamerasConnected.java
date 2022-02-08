@@ -10,7 +10,6 @@ public class NoCamerasConnected extends JFrame{
         this.setContentPane(panel1);
         this.setSize(165,285);
         this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void createUIComponents() {

@@ -9,6 +9,5 @@ public class IncorrectCredentials extends JFrame{
         this.setContentPane(JPanel);
         this.setVisible(true);
         this.setSize(500, 320);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

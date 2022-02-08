@@ -8,8 +8,7 @@ public class NoConnections extends JFrame{
     NoConnections()
     {
         this.setContentPane(panel1);
-        this.setSize(500,300);
+        this.setSize(500,170);
         this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
