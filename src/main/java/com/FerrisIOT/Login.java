@@ -38,7 +38,7 @@ public class Login extends JFrame {
                     {
                         new CameraGrid();
                     }
-                    else
+                    else if(Stat == "")
                     {
                         new NoConnections();
                     }

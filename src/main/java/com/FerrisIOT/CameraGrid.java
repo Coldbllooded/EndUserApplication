@@ -2,9 +2,13 @@ package com.FerrisIOT;
 
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.ds.ipcam.IpCamDeviceRegistry;
+import com.github.sarxos.webcam.ds.ipcam.IpCamMode;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +28,7 @@ public class CameraGrid extends JFrame {
         {
             for(Webcam web: Webcam.getWebcams())
             {
+
                 WebcamPanel panel = new WebcamPanel(web, new Dimension(600, 600), false);
                 panel.setDrawMode(WebcamPanel.DrawMode.FIT);
                 panel.setFPSLimited(true);
