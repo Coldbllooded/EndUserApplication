@@ -13,20 +13,20 @@ import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 
 public class GetVal {
-    public static LinkedList<String> GetData(String SID) {
+    public static LinkedList<Camera> GetData(String USID) {
         //Data Request
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost lis = new HttpPost("http://10.35.81.223:8000/test");
         //Set Header
         lis.addHeader("Request", "cams");
         //Set Body
+        StringEntity entity = null;
         try {
-            StringEntity entity = new StringEntity(SID);
-            lis.setEntity(entity);
-        } catch (
-                UnsupportedEncodingException ex) {
-            ex.printStackTrace();
+            entity = new StringEntity(USID);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
+        lis.setEntity(entity);
         //Data Response
         CloseableHttpResponse B = null;
         try {
@@ -36,12 +36,15 @@ public class GetVal {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        LinkedList<String> data = null;
+        LinkedList<Camera> data = new LinkedList<>();
         try {
             String temp = EntityUtils.toString(lis.getEntity());
             String[] temp2 = temp.split("\n");
             for (String indiv :temp2){
-                data.add(indiv);
+                String[] camera = indiv.split("\\|");
+                //Now we have array index 0 of array 'camera' as always the UUID of the thing we are looking at, and index 1 as the camera name
+                data.add(new Camera(camera[0],camera[1]));
+
             }
         } catch (IOException e) {
             e.printStackTrace();

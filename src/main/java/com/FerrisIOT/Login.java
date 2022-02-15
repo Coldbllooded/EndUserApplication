@@ -1,6 +1,8 @@
 package com.FerrisIOT;
 
 import com.FerrisIOT.HTTP.HttpController;
+
+import javax.media.StopEvent;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -65,5 +67,13 @@ public class Login extends JFrame {
                 new NoConnections();
             }
         });
+    }
+    public static void CreateLogin()
+    {
+        new Login();
+    }
+    public static void ResetLogin()
+    {
+        System.exit(0);
     }
 }
