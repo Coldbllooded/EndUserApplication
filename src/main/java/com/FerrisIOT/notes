@@ -1,0 +1,19 @@
+Flow control for applications should have a scaling model of tools and their implementations. For example, the idea that
+we use a lot of HTTP post and get requests requires us to make methods for those things, given the need is simple but
+abundant.
+
+Abstracting these things out to to methods with simple IO is key. The only thing we care about when making a request is:
+
+    - completing the request
+    - adding custom headers
+    - adding a custom body
+    - using a different URL sometimes, so we can specify that
+    - returning the body as a string so that we can parse through it manually
+
+Additionally, the need for custom parsers given things like dealing with a specially delimited list, login, or formatted
+information clusters may require compartmentalization, but at the moment, it seems unneeded.
+
+---
+
+The next part to focus on in this client software is to make sure that there is a central location for all pertinent data
+regarding a cluster of cameras and a timer for keepalive packets to be sent
