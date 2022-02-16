@@ -22,8 +22,10 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
-
+@Deprecated
+//Depreciated, use com.FerrisIOT.HTTP.Https instead
 public class HTTPS {
+
     public static void HTTPGET(String URI)
     {
         HttpGet request = new HttpGet(URI);
@@ -48,12 +50,13 @@ public class HTTPS {
                 System.out.println(result);
             }
 
-        } catch (IOException ex) {
+        } catch (IOException | NoSuchAlgorithmException ex) {
             ex.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
         }
     }
+
+
+
     public static CloseableHttpResponse HTTPPOST(String URI, String UN, String PW)
     {
         //Http Post
@@ -61,7 +64,7 @@ public class HTTPS {
         HttpPost post = new HttpPost(URI);
 
         //Set Header
-        post.addHeader("Request","authentication");
+        post.addHeader("request","authentication");
         //Set Body
         try {
             StringEntity entity = new StringEntity(UN + "|" + PW);
@@ -77,6 +80,8 @@ public class HTTPS {
         }
         return (response);
     }
+
+    /*
     public static void HTTPs(String URI) {
         URL myUrl = null;
         try {
@@ -94,5 +99,5 @@ public class HTTPS {
 
         conn.disconnect();
 
-    }
+    }*/
 }
