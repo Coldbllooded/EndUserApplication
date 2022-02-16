@@ -1,11 +1,11 @@
 package com.FerrisIOT;
 
 public class Camera {
-    String UCID;
-    String Name;
-    Camera(String UCID, String Name){
-        this.UCID = UCID;
-        this.Name = Name;
+    private String UCID;
+    private String Name;
+    Camera(String uuid, String name){
+        this.UCID = uuid;
+        this.Name = name;
     }
 
     public String getUCID() {
