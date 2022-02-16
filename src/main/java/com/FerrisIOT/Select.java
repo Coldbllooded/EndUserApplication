@@ -3,21 +3,32 @@ package com.FerrisIOT;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URL;
 import java.util.LinkedList;
 
 public class Select extends JFrame {
     private JPanel choose;
-    private JPanel Grid;
-
-    public Select(LinkedList<Camera> Dname) {
+    public  JPanel Grid;
+    Select(LinkedList<Camera> Cameras){
+        Grid(Cameras);
+    }
+    public void Grid(LinkedList<Camera> Dname) {
         for (int x = 0; x <= Dname.size(); x++) {
-
             JButton NB = new JButton(Dname.get(x).getName());
             Grid.add(NB);
+            int finalX = x;
             NB.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //Open link to device choosen
+                    //Call Function to close
+                    try {
+                        Main.ActiveStream = Operations.requestConnection(Main.Authentication.getSessionKey(), Dname.get(finalX), Main.Authentication.getID());
+
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+
                 }
             });
 

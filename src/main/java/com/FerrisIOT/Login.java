@@ -1,19 +1,23 @@
 package com.FerrisIOT;
 
-import com.FerrisIOT.HTTP.HttpController;
+import com.FerrisIOT.HTTP.Https;
 
-import javax.media.StopEvent;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Login extends JFrame {
     private JFormattedTextField formattedTextField1;
     private JFormattedTextField formattedTextField2;
     private JButton enterButton;
     private JPanel Log;
-    public String Stat = "Null";
+    public String Status = "";
+    public String Camslist = "";
+    public String URL = "10.35.80.77:8000";
 
     Login(){
         this.setVisible(true);
@@ -30,19 +34,36 @@ public class Login extends JFrame {
                 {
                     String U = formattedTextField1.getText();
                     String P = formattedTextField2.getText();
-                    Stat = (HttpController.HTTPC(U, P));
+                    //Removed URL from this context for easy manipulation
+                    HashMap<String, String> Req = new HashMap<>();
+                    Req.put("request", "authentication");
+                    Https.Request Stat = null;
+                    try {
+                        Stat = Https.post(URL,U+"|"+ P, Req);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    Status = Stat.getBody();
                     System.out.println(Stat);
-                    if (Stat == "fail")
+
+                    if (Status == "%INVALID")
                     {
                         new IncorrectCredentials();
                     }
-                    else if(Stat == "ok")
+                    else
                     {
-                        new CameraGrid();
-                    }
-                    else if(Stat == "")
-                    {
-                        new NoConnections();
+                        //User and Session ID
+                        Integer UID = Main.Authentication.getID();
+                        String SID = Main.Authentication.getSessionKey();
+                        try {
+                            LinkedList Cams = Operations.requestCameras(SID, UID);
+                            //Create camera list
+                            new Select(Cams);
+                            //Use return from Select to establish connection
+
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                     }
 
                 }
@@ -53,18 +74,35 @@ public class Login extends JFrame {
             //Check Credentials
             String U = formattedTextField1.getText();
             String P = formattedTextField2.getText();
-            Stat = HttpController.HTTPC(U, P);
-            if (Stat == "fail")
+            String URL = "10.35.80.77:8000";
+            HashMap<String, String> Auth = new HashMap<>();
+            Auth.put("request", "authentication");
+            Https.Request Stat = null;
+            try {
+                Stat = Https.post(URL,U+"|"+ P, Auth);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            Status = Stat.getBody();
+            System.out.println(Stat);
+            if (Status == "%INVALID")
             {
                 new IncorrectCredentials();
             }
-            else if(Stat == "ok")
-            {
-                new CameraGrid();
-            }
             else
             {
-                new NoConnections();
+                //User and Session ID
+                Integer UID = Main.Authentication.getID();
+                String SID = Main.Authentication.getSessionKey();
+                try {
+                    LinkedList Cams = Operations.requestCameras(SID, UID);
+                    //Create camera list
+                    new Select(Cams);
+                    //Use return from Select to establish connection
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }

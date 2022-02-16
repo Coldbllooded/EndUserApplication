@@ -26,7 +26,6 @@ public class Https {
         public int getStatus() {
             return status;
         }
-
         public String getBody() {
             return body;
         }
