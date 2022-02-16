@@ -93,7 +93,6 @@ public class Https {
         for(int c = input.read(); c != -1; c = input.read()) stringOut.append(c);
         input.close();
 
-
         return new Request(con.getResponseCode(), stringOut.toString());
     }
 
