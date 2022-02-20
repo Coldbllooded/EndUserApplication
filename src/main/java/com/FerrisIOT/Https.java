@@ -1,4 +1,4 @@
-package com.FerrisIOT.HTTP;
+package com.FerrisIOT;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.DataInputStream;
@@ -46,6 +46,7 @@ public class Https {
         HttpsURLConnection con = (HttpsURLConnection)myurl.openConnection();
         //Set the type of request to POST
         con.setRequestMethod("POST");
+        con.setDoOutput(true);
         //Iteratively sets headers
         for (String key : headers.keySet()) con.setRequestProperty(key, headers.get(key));
 
@@ -59,8 +60,7 @@ public class Https {
         StringBuilder stringOut = new StringBuilder();
         //Build the final response
         for( int c = input.read(); c != -1; c = input.read() )
-            stringOut.append(c);
-
+            stringOut.append((char)c);
         input.close();
         
         return new Request(con.getResponseCode(), stringOut.toString());
@@ -90,7 +90,7 @@ public class Https {
         DataInputStream input = new DataInputStream(con.getInputStream());
         StringBuilder stringOut = new StringBuilder();
 
-        for(int c = input.read(); c != -1; c = input.read()) stringOut.append(c);
+        for(int c = input.read(); c != -1; c = input.read()) stringOut.append((char)c);
         input.close();
 
         return new Request(con.getResponseCode(), stringOut.toString());
