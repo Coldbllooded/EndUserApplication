@@ -1,7 +1,5 @@
 package com.FerrisIOT;
 
-import com.FerrisIOT.HTTP.Https;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -53,8 +51,10 @@ public class Login extends JFrame {
                     else
                     {
                         //User and Session ID
-                        Integer UID = Main.Authentication.getID();
-                        String SID = Main.Authentication.getSessionKey();
+                        int UID = Main.authenticator.getUserID();
+                        String SID = Main.authenticator.getSessionKey();
+                        assert SID != null;
+                        assert UID != -1;
                         try {
                             LinkedList Cams = Operations.requestCameras(SID, UID);
                             //Create camera list
@@ -92,10 +92,12 @@ public class Login extends JFrame {
             else
             {
                 //User and Session ID
-                Integer UID = Main.Authentication.getID();
-                String SID = Main.Authentication.getSessionKey();
+                int UID = Main.authenticator.getUserID();
+                String SID = Main.authenticator.getSessionKey();
+                assert SID != null;
+                assert UID != -1;
                 try {
-                    LinkedList Cams = Operations.requestCameras(SID, UID);
+                    LinkedList<Camera> Cams = Operations.requestCameras(SID, UID);
                     //Create camera list
                     new Select(Cams);
                     //Use return from Select to establish connection
