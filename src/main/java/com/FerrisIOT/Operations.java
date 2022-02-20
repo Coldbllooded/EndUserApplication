@@ -1,6 +1,6 @@
 package com.FerrisIOT;
 
-import com.FerrisIOT.HTTP.Https;
+import com.FerrisIOT.Https;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -88,5 +88,6 @@ public class Operations {
 
     }
 
+    //TODO: authentication handler, status request,
 
 }
