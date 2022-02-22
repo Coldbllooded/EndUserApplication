@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="IOTuserApplication" target="17" />
+      <module name="IOTuserApplication" target="16" />
     </bytecodeTargetLevel>
   </component>
 </project>

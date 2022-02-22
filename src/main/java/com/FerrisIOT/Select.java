@@ -14,6 +14,7 @@ public class Select extends JFrame {
         Grid(Cameras);
     }
     public void Grid(LinkedList<Camera> Dname) {
+        Grid.add(new Return(this));
         for (int x = 0; x <= Dname.size(); x++) {
             JButton NB = new JButton(Dname.get(x).getName());
             Grid.add(NB);

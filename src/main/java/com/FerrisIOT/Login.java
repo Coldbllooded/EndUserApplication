@@ -7,17 +7,20 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.logging.Handler;
 
 public class Login extends JFrame {
     private JFormattedTextField formattedTextField1;
     private JFormattedTextField formattedTextField2;
     private JButton enterButton;
     private JPanel Log;
-    public String Status = "";
-    public String Camslist = "";
-    public String URL = "10.35.80.77:8000";
 
     Login(){
+        try {
+            System.out.println(Https.get(Main.URL, new HashMap<>()).getBody());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.setVisible(true);
         this.setContentPane(Log);
         this.setSize(new Dimension(1000, 600));
@@ -33,18 +36,15 @@ public class Login extends JFrame {
                     String U = formattedTextField1.getText();
                     String P = formattedTextField2.getText();
                     //Removed URL from this context for easy manipulation
-                    HashMap<String, String> Req = new HashMap<>();
-                    Req.put("request", "authentication");
-                    Https.Request Stat = null;
+
                     try {
-                        Stat = Https.post(URL,U+"|"+ P, Req);
+                        Main.Authentication = Operations.authenticateUser(U, P);
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
-                    Status = Stat.getBody();
-                    System.out.println(Stat);
 
-                    if (Status == "%INVALID")
+                    assert Main.Authentication != null;
+                    if (!Main.Authentication.isAuthenticated())
                     {
                         new IncorrectCredentials();
                     }
@@ -74,18 +74,15 @@ public class Login extends JFrame {
             //Check Credentials
             String U = formattedTextField1.getText();
             String P = formattedTextField2.getText();
-            String URL = "10.35.80.77:8000";
-            HashMap<String, String> Auth = new HashMap<>();
-            Auth.put("request", "authentication");
-            Https.Request Stat = null;
+
             try {
-                Stat = Https.post(URL,U+"|"+ P, Auth);
+                Main.Authentication = Operations.authenticateUser(U, P);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            Status = Stat.getBody();
-            System.out.println(Stat);
-            if (Status == "%INVALID")
+
+            assert Main.Authentication != null;
+            if (!Main.Authentication.isAuthenticated())
             {
                 new IncorrectCredentials();
             }

@@ -9,5 +9,6 @@ public class IncorrectCredentials extends JFrame{
         this.setContentPane(JPanel);
         this.setVisible(true);
         this.setSize(500, 320);
+        new Return(this);
     }
 }
