@@ -5,9 +5,10 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.logging.Handler;
 
 public class Login extends JFrame {
     private JFormattedTextField formattedTextField1;
@@ -18,7 +19,7 @@ public class Login extends JFrame {
     Login(){
         try {
             System.out.println(Https.get(Main.URL, new HashMap<>()).getBody());
-        } catch (IOException e) {
+        } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
         }
         this.setVisible(true);
@@ -38,13 +39,13 @@ public class Login extends JFrame {
                     //Removed URL from this context for easy manipulation
 
                     try {
-                        Main.Authentication = Operations.authenticateUser(U, P);
-                    } catch (IOException ex) {
+                        Main.authenticator = Operations.authenticateUser(U, P);
+                    } catch (IOException | NoSuchAlgorithmException | KeyManagementException ex) {
                         ex.printStackTrace();
                     }
 
-                    assert Main.Authentication != null;
-                    if (!Main.Authentication.isAuthenticated())
+                    assert Main.authenticator != null;
+                    if (Main.authenticator.isAuthenticated())
                     {
                         new IncorrectCredentials();
                     }
@@ -56,12 +57,12 @@ public class Login extends JFrame {
                         assert SID != null;
                         assert UID != -1;
                         try {
-                            LinkedList Cams = Operations.requestCameras(SID, UID);
+                            LinkedList<Camera> Cams = Operations.requestCameras(SID, UID);
                             //Create camera list
                             new Select(Cams);
                             //Use return from Select to establish connection
 
-                        } catch (IOException ex) {
+                        } catch (IOException | NoSuchAlgorithmException | KeyManagementException ex) {
                             ex.printStackTrace();
                         }
                     }
@@ -76,13 +77,13 @@ public class Login extends JFrame {
             String P = formattedTextField2.getText();
 
             try {
-                Main.Authentication = Operations.authenticateUser(U, P);
-            } catch (IOException ex) {
+                Main.authenticator = Operations.authenticateUser(U, P);
+            } catch (IOException | KeyManagementException | NoSuchAlgorithmException ex) {
                 ex.printStackTrace();
             }
 
-            assert Main.Authentication != null;
-            if (!Main.Authentication.isAuthenticated())
+            assert Main.authenticator != null;
+            if (Main.authenticator.isAuthenticated())
             {
                 new IncorrectCredentials();
             }
@@ -99,7 +100,7 @@ public class Login extends JFrame {
                     new Select(Cams);
                     //Use return from Select to establish connection
 
-                } catch (IOException ex) {
+                } catch (IOException | NoSuchAlgorithmException | KeyManagementException ex) {
                     ex.printStackTrace();
                 }
             }

@@ -8,8 +8,6 @@ public class Return extends JButton{
         returnButton.setVisible(true);
         returnButton.setSize(50,30);
         returnButton.setText("Return");
-        returnButton.addActionListener(e ->{
-            Current.dispose();
-        });
+        returnButton.addActionListener(e -> Current.dispose());
     }
 }

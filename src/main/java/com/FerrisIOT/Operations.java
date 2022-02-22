@@ -2,6 +2,8 @@ package com.FerrisIOT;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -17,7 +19,7 @@ public class Operations {
      * @param id the user ID
      * @throws IOException If the exchange between the server and the client fails or breaks
      */
-    public static LinkedList<Camera> requestCameras(String session_key, int id) throws IOException {
+    public static LinkedList<Camera> requestCameras(String session_key, int id) throws IOException, NoSuchAlgorithmException, KeyManagementException {
         //Updated to be more efficient and easier to use
 
         //Generate Headers
@@ -36,25 +38,6 @@ public class Operations {
             }
             return data;
         } else return null;
-        /*
-        //Data Request
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost lis = new HttpPost("https://10.35.81.223:8000/test");
-        //Set Header
-        lis.addHeader("Request", "cams");
-        //Set Body
-        lis.setEntity(new StringEntity(sessionKey));
-        //Data Response
-        client.execute(lis);
-
-
-        String temp = EntityUtils.toString(lis.getEntity());
-
-
-
-        return data;
-
-         */
     }
 
     /**
@@ -66,7 +49,7 @@ public class Operations {
      * @return A URL of the active stream
      * @throws IOException If the exchange between the server and the client fails or breaks
      */
-    public static URL requestConnection(String session_key, Camera camera, int id) throws IOException {
+    public static URL requestConnection(String session_key, Camera camera, int id) throws IOException, NoSuchAlgorithmException, KeyManagementException {
 
         HashMap<String, String> headers = new HashMap<>();
         headers.put("request", "stream");
@@ -86,12 +69,7 @@ public class Operations {
      * @param id The User's ID, unique to them
      * @param status_code The Status code of the POST made for the authentication. Used if {@code isAuthenticated} is {@code FALSE} to determine the cause of failure
      */
-    public record Authentication(boolean isAuthenticated, int status_code, int id, String sessionKey){
-        public int getStatusCode() { return status_code; }
-        public boolean isAuthenticated() { return isAuthenticated; }
-        public int getID() { return this.id; }
-        public String getSessionKey() { return this.sessionKey; }
-    }
+
 
     /**
      * <b>METHOD AUTHENTICATE USER</b>
@@ -101,7 +79,7 @@ public class Operations {
      * @return An Authentication object filled with information about status, if authentication completed sucessfully, the user ID and the session key.
      * @throws IOException if the connection was broken or interrupted
      */
-    public static Authentication authenticateUser(String username, String password) throws IOException {
+    public static Authenticator authenticateUser(String username, String password) throws IOException, NoSuchAlgorithmException, KeyManagementException {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("request", "authentication");
 
@@ -112,7 +90,7 @@ public class Operations {
         int userID = Integer.parseInt(request.getBody().split("\n")[0]);
         String sessionKey = request.getBody().split("\n")[1];
 
-        return new Authentication(isAuthenticated, request.getStatus(), userID, sessionKey);
+        return new Authenticator (userID, sessionKey, status, isAuthenticated);
     }
 
 

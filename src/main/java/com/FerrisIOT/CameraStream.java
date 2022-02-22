@@ -6,12 +6,8 @@ import com.github.sarxos.webcam.ds.ipcam.IpCamDeviceRegistry;
 import com.github.sarxos.webcam.ds.ipcam.IpCamMode;
 
 import javax.swing.*;
-import java.net.URL;
 
 public class CameraStream {
-    static{
-
-    }
     public static void main(){
         IpCamDeviceRegistry.register("CameraName",Main.ActiveStream, IpCamMode.PULL);
         WebcamPanel panel = new WebcamPanel(Webcam.getWebcams().get(0));

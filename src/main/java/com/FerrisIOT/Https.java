@@ -1,10 +1,13 @@
 package com.FerrisIOT;
 
-import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 
 /**
@@ -39,11 +42,41 @@ public class Https {
      * @param body - The string that should be sent to the receiver
      * @return - Request object with the corresponding response code as an integer, and body as a string
      */
-    public static Request post(String httpsURL, String body, HashMap<String, String> headers) throws IOException {
+    public static Request post(String httpsURL, String body, HashMap<String, String> headers) throws IOException, NoSuchAlgorithmException, KeyManagementException {
         //Convert to URL
         URL myurl = new URL(httpsURL);
         //Open a connection
+
+        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+
+            @Override
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+
+                return null;
+            }
+
+            @Override
+            public void checkClientTrusted(X509Certificate[] certs,
+                                           String authType) {
+
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] certs,
+                                           String authType) {
+
+            }
+        } };
+
+        // Install the all-trusting trust manager
+        SSLContext sc = SSLContext.getInstance("TLS");
+        sc.init(null, trustAllCerts, new java.security.SecureRandom());
+
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
+
         HttpsURLConnection con = (HttpsURLConnection)myurl.openConnection();
+
         //Set the type of request to POST
         con.setRequestMethod("POST");
         con.setDoOutput(true);
@@ -75,12 +108,39 @@ public class Https {
      * @param headers An ordered list of headers to apply to the packet being sent
      * @return Request object with the corresponding response code as an integer, and body as a string
      */
-    public static Request get(String httpsURL, HashMap<String, String> headers) throws IOException {
+    public static Request get(String httpsURL, HashMap<String, String> headers) throws IOException, NoSuchAlgorithmException, KeyManagementException {
         //Convert to URL
         URL myurl = new URL(httpsURL);
         //Open a connection
-        HttpsURLConnection  con = (HttpsURLConnection)myurl.openConnection();
-        //Set the type of request to POST
+        TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+
+            @Override
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+
+                return null;
+            }
+
+            @Override
+            public void checkClientTrusted(X509Certificate[] certs,
+                                           String authType) {
+
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] certs,
+                                           String authType) {
+
+            }
+        } };
+
+        // Install the all-trusting trust manager
+        SSLContext sc = SSLContext.getInstance("TLS");
+        sc.init(null, trustAllCerts, new java.security.SecureRandom());
+
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
+        HttpsURLConnection con = (HttpsURLConnection)myurl.openConnection();
+        //Set the type of request to GET
         con.setRequestMethod("GET");
 
         //Iteratively sets headers

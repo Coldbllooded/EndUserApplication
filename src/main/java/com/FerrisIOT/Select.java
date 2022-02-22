@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 
 public class Select extends JFrame {
@@ -19,18 +20,15 @@ public class Select extends JFrame {
             JButton NB = new JButton(Dname.get(x).getName());
             Grid.add(NB);
             int finalX = x;
-            NB.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    //Call Function to close
-                    try {
-                        Main.ActiveStream = Operations.requestConnection(Main.Authentication.getSessionKey(), Dname.get(finalX), Main.Authentication.getID());
+            NB.addActionListener(e -> {
+                //Call Function to close
+                try {
+                    Main.ActiveStream = Operations.requestConnection(Main.authenticator.getSessionKey(), Dname.get(finalX), Main.authenticator.getUserID());
 
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-
+                } catch (IOException | NoSuchAlgorithmException | KeyManagementException ex) {
+                    ex.printStackTrace();
                 }
+
             });
 
 

@@ -3,11 +3,14 @@ package com.FerrisIOT;
 import java.util.UUID;
 
 public class Authenticator {
-    private int userID = -1;
-    private UUID sessionKey = null;
+    private int userID;
+    private UUID sessionKey;
+    private int status;
+    private boolean isAuthenticated;
 
-    Authenticator(){};
-    Authenticator(int userID, String sessionKey){
+    Authenticator(int userID, String sessionKey, int status, boolean isAuthenticated){
+        this.isAuthenticated = isAuthenticated;
+        this.status = status;
         this.sessionKey = UUID.fromString(sessionKey);
         this.userID = userID;
     }
@@ -27,5 +30,21 @@ public class Authenticator {
 
     public void setSessionKey(UUID sessionKey) {
         this.sessionKey = sessionKey;
+    }
+
+    public boolean isAuthenticated() {
+        return isAuthenticated;
+    }
+
+    public void setAuthenticated(boolean authenticated) {
+        isAuthenticated = authenticated;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
