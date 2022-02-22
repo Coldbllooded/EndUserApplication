@@ -13,17 +13,22 @@ public class Select extends JFrame {
     public  JPanel Grid;
     Select(LinkedList<Camera> Cameras){
         Grid(Cameras);
+        this.setContentPane(choose);
+        this.setSize(1000,500);
+        this.setVisible(true);
+
     }
     public void Grid(LinkedList<Camera> Dname) {
-        Grid.add(new Return(this));
-        for (int x = 0; x <= Dname.size(); x++) {
-            JButton NB = new JButton(Dname.get(x).getName());
+        for (Camera camera : Dname) {
+            System.out.println(camera.getName());
+            JButton NB = new JButton(camera.getName());
+            System.out.println(NB);
             Grid.add(NB);
-            int finalX = x;
+
             NB.addActionListener(e -> {
                 //Call Function to close
                 try {
-                    Main.ActiveStream = Operations.requestConnection(Main.authenticator.getSessionKey(), Dname.get(finalX), Main.authenticator.getUserID());
+                    Main.ActiveStream = Operations.requestConnection(Main.authenticator.getSessionKey(), camera, Main.authenticator.getUserID());
 
                 } catch (IOException | NoSuchAlgorithmException | KeyManagementException ex) {
                     ex.printStackTrace();
@@ -34,5 +39,7 @@ public class Select extends JFrame {
 
         }
         Grid.revalidate();
+        Grid.setVisible(true);
+        choose.setVisible(true);
     }
 }

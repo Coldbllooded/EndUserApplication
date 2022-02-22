@@ -30,6 +30,7 @@
           <background color="-16777216"/>
           <editable value="false"/>
           <font name="Bernard MT Condensed" size="28" style="1"/>
+          <foreground color="-459265"/>
           <text value="There are No Cameras Attached to the Device You are Trying to Access"/>
         </properties>
       </component>

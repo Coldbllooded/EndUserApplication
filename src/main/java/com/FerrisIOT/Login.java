@@ -45,7 +45,7 @@ public class Login extends JFrame {
                     }
 
                     assert Main.authenticator != null;
-                    if (Main.authenticator.isAuthenticated())
+                    if (!Main.authenticator.isAuthenticated())
                     {
                         new IncorrectCredentials();
                     }
@@ -83,7 +83,7 @@ public class Login extends JFrame {
             }
 
             assert Main.authenticator != null;
-            if (Main.authenticator.isAuthenticated())
+            if (!Main.authenticator.isAuthenticated())
             {
                 new IncorrectCredentials();
             }

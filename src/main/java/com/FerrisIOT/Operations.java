@@ -54,7 +54,7 @@ public class Operations {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("request", "stream");
 
-        Https.Request request = Https.post(Main.URL, id + "|" + session_key + "\\|" + camera.getUCID(), headers);
+        Https.Request request = Https.post(Main.URL, id + "|" + session_key + "|" + camera.getUCID(), headers);
 
         //assume the only response is a standard URL format with IP or domain and port
         return new URL(request.getBody());
