@@ -1,23 +1,13 @@
 package com.FerrisIOT;
 
-import com.FerrisIOT.Https;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 //Updated class name to OPERATIONS because if we want to put more things here that do more things, and those things perform http operations, hence OPERATIONS
 
 public class Operations {
-
-    static String url = "https://10.35.81.223:8000/test";
 
     /**
      * <b>Request Cameras</b>
@@ -34,7 +24,7 @@ public class Operations {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("request", "cams");
 
-        Https.Request request = Https.post(url, id + "|" + session_key, headers);
+        Https.Request request = Https.post(Main.URL, id + "|" + session_key, headers);
 
         if (request.getStatus() == 200) {
             LinkedList<Camera> data = new LinkedList<>();
@@ -53,7 +43,7 @@ public class Operations {
         //Set Header
         lis.addHeader("Request", "cams");
         //Set Body
-        lis.setEntity(new StringEntity(session_key));
+        lis.setEntity(new StringEntity(sessionKey));
         //Data Response
         client.execute(lis);
 
@@ -81,13 +71,49 @@ public class Operations {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("request", "stream");
 
-        Https.Request request = Https.post(url, id + "|" + session_key + "\\|" + camera.getUCID(), headers);
+        Https.Request request = Https.post(Main.URL, id + "|" + session_key + "\\|" + camera.getUCID(), headers);
 
         //assume the only response is a standard URL format with IP or domain and port
         return new URL(request.getBody());
 
     }
 
-    //TODO: authentication handler, status request,
+    /**
+     * <b>RECORD Authentication</b>
+     * <p>The Authentication Record is generated whenever the user logs in. Stored here is a set of values to use after a user authenticates</p>
+     * @param isAuthenticated {@code TRUE} when the user authenticates, {@code FALSE} when there is an error
+     * @param sessionKey The unique session key that generates when a user logs in, and is used for completing requests of various data
+     * @param id The User's ID, unique to them
+     * @param status_code The Status code of the POST made for the authentication. Used if {@code isAuthenticated} is {@code FALSE} to determine the cause of failure
+     */
+    public record Authentication(boolean isAuthenticated, int status_code, int id, String sessionKey){
+        public int getStatusCode() { return status_code; }
+        public boolean isAuthenticated() { return isAuthenticated; }
+        public int getID() { return this.id; }
+        public String getSessionKey() { return this.sessionKey; }
+    }
+
+    /**
+     * <b>METHOD AUTHENTICATE USER</b>
+     * <p>Attempts to contact the main server for authentication, given a username and password</p>
+     * @param username The user's username
+     * @param password The user's password
+     * @return An Authentication object filled with information about status, if authentication completed sucessfully, the user ID and the session key.
+     * @throws IOException if the connection was broken or interrupted
+     */
+    public static Authentication authenticateUser(String username, String password) throws IOException {
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("request", "authentication");
+
+        Https.Request request = Https.post(Main.URL, username + "|" + password, headers);
+
+        int status = request.getStatus();
+        boolean isAuthenticated = status == 200;
+        int userID = Integer.parseInt(request.getBody().split("\n")[0]);
+        String sessionKey = request.getBody().split("\n")[1];
+
+        return new Authentication(isAuthenticated, request.getStatus(), userID, sessionKey);
+    }
+
 
 }
