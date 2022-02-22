@@ -87,6 +87,11 @@ public class Operations {
 
         int status = request.getStatus();
         boolean isAuthenticated = status == 200;
+
+        if (request.getBody().equals("%INVALID")){
+            System.out.println("Request to auth INVALID");
+            return new Authenticator (-1, "-1", status, false);
+        }
         int userID = Integer.parseInt(request.getBody().split("\n")[0]);
         String sessionKey = request.getBody().split("\n")[1];
 
