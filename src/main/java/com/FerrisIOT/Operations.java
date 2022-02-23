@@ -34,6 +34,7 @@ public class Operations {
             for (String indiv :temp2){
                 String[] camera = indiv.split("\\|");
                 //Now we have array index 0 of array 'camera' as always the UUID of the thing we are looking at, and index 1 as the camera name
+                //Camera record is as follows: UUID, NAME
                 data.add(new Camera(camera[0],camera[1]));
             }
             return data;
@@ -54,7 +55,7 @@ public class Operations {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("request", "stream");
 
-        Https.Request request = Https.post(Main.URL, id + "|" + session_key + "|" + camera.getUCID(), headers);
+        Https.Request request = Https.post(Main.URL, id + "|" + session_key + "|" + camera.getUuid(), headers);
 
         //assume the only response is a standard URL format with IP or domain and port
         return new URL(request.getBody());
