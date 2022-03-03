@@ -1,9 +1,11 @@
 package com.FerrisIOT;
 
 import javax.swing.*;
+import javax.swing.border.AbstractBorder;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -22,6 +24,14 @@ public class Login extends JFrame {
         } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
         }
+        Image Icon = new javax.swing.ImageIcon("C:\\Users\\darth\\Desktop\\Senior Projects\\Bulldog.png").getImage();
+        this.setIconImage(Icon);
+        enterButton.setBorder(new AbstractBorder() {
+            @Override
+            public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+                super.paintBorder(c, g, x, y, width, height);
+            }
+        });
         this.setVisible(true);
         this.setContentPane(Log);
         this.setSize(new Dimension(1000, 500));
