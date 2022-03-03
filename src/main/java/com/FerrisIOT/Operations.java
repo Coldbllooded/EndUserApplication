@@ -1,7 +1,6 @@
 package com.FerrisIOT;
 
 import java.io.IOException;
-import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -50,7 +49,7 @@ public class Operations {
      * @return A URL of the active stream
      * @throws IOException If the exchange between the server and the client fails or breaks
      */
-    public static URL requestConnection(String session_key, Camera camera, int id) throws IOException, NoSuchAlgorithmException, KeyManagementException {
+    public static String requestConnection(String session_key, Camera camera, int id) throws IOException, NoSuchAlgorithmException, KeyManagementException {
 
         HashMap<String, String> headers = new HashMap<>();
         headers.put("request", "stream");
@@ -58,7 +57,7 @@ public class Operations {
         Https.Request request = Https.post(Main.URL, id + "|" + session_key + "|" + camera.getUuid(), headers);
 
         //assume the only response is a standard URL format with IP or domain and port
-        return new URL(request.getBody());
+        return String.valueOf(request.getBody());
 
     }
 

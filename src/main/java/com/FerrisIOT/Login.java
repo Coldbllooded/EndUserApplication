@@ -24,7 +24,7 @@ public class Login extends JFrame {
         }
         this.setVisible(true);
         this.setContentPane(Log);
-        this.setSize(new Dimension(1000, 600));
+        this.setSize(new Dimension(1000, 500));
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         formattedTextField2.addKeyListener(new KeyAdapter()
@@ -111,9 +111,5 @@ public class Login extends JFrame {
     public static void CreateLogin()
     {
         new Login();
-    }
-    public static void ResetLogin()
-    {
-        System.exit(0);
     }
 }
