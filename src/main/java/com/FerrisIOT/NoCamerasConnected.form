@@ -31,7 +31,7 @@
           <editable value="false"/>
           <font name="Bernard MT Condensed" size="28" style="1"/>
           <foreground color="-459265"/>
-          <text value="There are No Cameras Attached to the Device You are Trying to Access"/>
+          <text value="There are No stationInfos Attached to the Device You are Trying to Access"/>
         </properties>
       </component>
       <hspacer id="659de">

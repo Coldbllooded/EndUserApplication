@@ -5,7 +5,6 @@ import javax.swing.border.AbstractBorder;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.geom.RoundRectangle2D;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -68,7 +67,7 @@ public class Login extends JFrame {
                         assert SID != null;
                         assert UID != -1;
                         try {
-                            LinkedList<Camera> Cams = Operations.requestCameras(SID, UID);
+                            LinkedList<StationInfo> Cams = Operations.requestCameras(SID, UID);
                             //Create camera list
                             new Select(Cams);
                             //Use return from Select to establish connection
@@ -107,7 +106,7 @@ public class Login extends JFrame {
                 assert SID != null;
                 assert UID != -1;
                 try {
-                    LinkedList<Camera> Cams = Operations.requestCameras(SID, UID);
+                    LinkedList<StationInfo> Cams = Operations.requestCameras(SID, UID);
                     //Create camera list
                     new Select(Cams);
                     //Use return from Select to establish connection

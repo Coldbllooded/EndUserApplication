@@ -18,7 +18,7 @@ public class Operations {
      * @param id the user ID
      * @throws IOException If the exchange between the server and the client fails or breaks
      */
-    public static LinkedList<Camera> requestCameras(String session_key, int id) throws IOException, NoSuchAlgorithmException, KeyManagementException {
+    public static LinkedList<StationInfo> requestCameras(String session_key, int id) throws IOException, NoSuchAlgorithmException, KeyManagementException {
         //Updated to be more efficient and easier to use
 
         //Generate Headers
@@ -28,13 +28,13 @@ public class Operations {
         Https.Request request = Https.post(Main.URL, id + "|" + session_key, headers);
 
         if (request.getStatus() == 200) {
-            LinkedList<Camera> data = new LinkedList<>();
+            LinkedList<StationInfo> data = new LinkedList<>();
             String[] temp2 = request.getBody().split("\n");
             for (String indiv :temp2){
                 String[] camera = indiv.split("\\|");
                 //Now we have array index 0 of array 'camera' as always the UUID of the thing we are looking at, and index 1 as the camera name
                 //Camera record is as follows: UUID, NAME
-                data.add(new Camera(camera[0],camera[1]));
+                data.add(new StationInfo(camera[0],camera[1],camera[2],camera[3],Main.authenticator.getUserID()));
             }
             return data;
         } else return null;
@@ -44,17 +44,17 @@ public class Operations {
      * <b>Request Connection</b>
      * <p>Given a camera and session key, get a direct address to the camera</p>
      * @param session_key the temporary string session key that allows the client to access services
-     * @param camera the camera in question to be found
+     * @param stationInfo the camera in question to be found
      * @param id the user ID
      * @return A URL of the active stream
      * @throws IOException If the exchange between the server and the client fails or breaks
      */
-    public static String requestConnection(String session_key, Camera camera, int id) throws IOException, NoSuchAlgorithmException, KeyManagementException {
+    public static String requestConnection(String session_key, StationInfo stationInfo, int id) throws IOException, NoSuchAlgorithmException, KeyManagementException {
 
         HashMap<String, String> headers = new HashMap<>();
         headers.put("request", "stream");
 
-        Https.Request request = Https.post(Main.URL, id + "|" + session_key + "|" + camera.getUuid(), headers);
+        Https.Request request = Https.post(Main.URL, id + "|" + session_key + "|" + stationInfo.getUuid(), headers);
 
         //assume the only response is a standard URL format with IP or domain and port
         return String.valueOf(request.getBody());
