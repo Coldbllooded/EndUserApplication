@@ -4,11 +4,16 @@ import javax.swing.*;
 
 public class Stream extends JFrame {
     private JPanel Box;
+    private JFrame InBOX;
 
     Stream(StationInfo sInfo, int Memory, int Cam, int Weat, int Speak)
     {
+        InBOX = new JFrame();
         //Create Camera Stream
-        Box.add(new Cam(sInfo.getCamStream()+Cam, sInfo.getName()));
+        System.out.println(sInfo.getCamStream());
+        RTSPStreamContainer x = new RTSPStreamContainer(sInfo.getCamStream()+Cam,1000,100);
+        InBOX.add(x);
+
         //Create Weather Stream
         //Weather(sInfo./*New Method*/)
         //Create Speaker Grid
@@ -16,8 +21,9 @@ public class Stream extends JFrame {
         //Create Memory Used Form
         JTextPane Percent = new JTextPane();
         Percent.setText(Memory + "%");
-        Box.add(Percent);
-        Box.setVisible(true);
+        InBOX.add(Percent);
+        InBOX.setVisible(true);
+        x.playStream();
 
     }
 

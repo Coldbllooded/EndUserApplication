@@ -4,7 +4,7 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 import javax.swing.*;
 
-public class RTSPStreamWindow extends JFrame {
+public class RTSPStreamContainer extends JPanel {
 
     /*
     REQUIRES following maven dependency:
@@ -20,8 +20,7 @@ public class RTSPStreamWindow extends JFrame {
 
     EmbeddedMediaPlayerComponent mediaPlayerComponent;
     String address;
-    String title;
-    JFrame frame;
+
 
     /**
      * Class RTSPStreamWindow
@@ -29,22 +28,28 @@ public class RTSPStreamWindow extends JFrame {
      *     Creates a singular window where one RTSP stream can play.
      * </p>
      * @param address
-     * @param title
+     * @param size
      */
-    RTSPStreamWindow(String address, String title){
+    RTSPStreamContainer(String address, Dimension size){
         this.address = address;
-        this.title = title;
-
-        this.frame = new JFrame(this.title);
-
         this.mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
-        frame.setContentPane(this.mediaPlayerComponent);
+        super.add(this.mediaPlayerComponent);
 
-        frame.setLocation(100, 100);
-        frame.setSize(1050, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        super.setSize(size);
+        super.setVisible(true);
+    }
 
+    RTSPStreamContainer(String address, int width, int height){
+        this.address = address;
+        this.mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
+        super.add(this.mediaPlayerComponent);
+
+        super.setSize(width, height);
+        super.setVisible(true);
+    }
+
+
+    public void playStream(){
         this.mediaPlayerComponent.mediaPlayer().media().play(this.address);
     }
 
@@ -55,15 +60,6 @@ public class RTSPStreamWindow extends JFrame {
 
     public String getCurrentAddress(){
         return this.address;
-    }
-
-    public void setNewTitle(String title){
-        this.title = title;
-        this.frame.setTitle(title);
-    }
-
-    public String getCurrentTitle(){
-        return this.title;
     }
 
 
