@@ -1,13 +1,15 @@
 package com.FerrisIOT;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 public class Stream extends JFrame {
     private JPanel Box;
     private JFrame InBOX;
 
-    Stream(StationInfo sInfo, int Memory, int Cam, int Weat, int Speak)
-    {
+    Stream(StationInfo sInfo, int Memory, int Cam, int Weat, int Speak) throws IOException, NoSuchAlgorithmException, KeyManagementException {
         InBOX = new JFrame();
         //Create Camera Stream
         System.out.println(sInfo.getCamStream());
@@ -15,7 +17,11 @@ public class Stream extends JFrame {
         InBOX.add(x);
 
         //Create Weather Stream
-        //Weather(sInfo./*New Method*/)
+        if (Weat > 0)
+            InBOX.add(new Weather(Operations.requestWeather(sInfo.getBasePass(),Main.authenticator.getSessionKey(),sInfo.getUuid())));
+        else
+            InBOX.add(new NoSensors());
+
         //Create Speaker Grid
         //Speaker(sInfo./*New Method*/)
         //Create Memory Used Form

@@ -1,6 +1,9 @@
 package com.FerrisIOT;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -24,8 +27,8 @@ public class Select extends JFrame {
             char[] Stat = stationInfo.getStatus().toCharArray();
             int mem = (int) (((int)Stat[3])-65*4.16);
             AtomicInteger CamSel = new AtomicInteger();
-            int WeatherSel = 0;
-            int SpeakerSel = 0;
+            AtomicInteger WeatherSel = new AtomicInteger();
+            AtomicInteger SpeakerSel = new AtomicInteger();
             if((int)Stat[0] > 0)
             {
 
@@ -53,7 +56,7 @@ public class Select extends JFrame {
                     SensorSelect.add(WB);
                     int finalI = j;
                     WB.addActionListener(e -> {
-                        CamSel.set(finalI);
+                        WeatherSel.set(finalI);
                     });
                 }
                 SensorSelect.revalidate();
@@ -69,7 +72,7 @@ public class Select extends JFrame {
                     SpeakerSelect.add(SB);
                     int finalI = k;
                     SB.addActionListener(e -> {
-                        CamSel.set(finalI);
+                        SpeakerSel.set(finalI);
                     });
                 }
                 SpeakerSelect.revalidate();
@@ -79,7 +82,15 @@ public class Select extends JFrame {
             System.out.println(NB);
             Grid.add(NB);
             NB.addActionListener(e -> {
-                new Stream(stationInfo, mem, CamSel.get(),WeatherSel,SpeakerSel);
+                try {
+                    new Stream(stationInfo, mem, CamSel.get(),WeatherSel.get(),SpeakerSel.get());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (NoSuchAlgorithmException ex) {
+                    ex.printStackTrace();
+                } catch (KeyManagementException ex) {
+                    ex.printStackTrace();
+                }
 
             });
 

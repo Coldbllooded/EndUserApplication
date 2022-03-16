@@ -41,6 +41,29 @@ public class Operations {
     }
 
     /**
+     *
+     * @param basePass Base Station Password
+     * @param session_key   Session ID
+     * @param UUID  Camera ID
+     * @return
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws KeyManagementException
+     */
+    public static String requestWeather(String basePass, String session_key, String UUID) throws IOException, NoSuchAlgorithmException, KeyManagementException {
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("request", "weather");
+
+        Https.Request request = Https.post(Main.URL,  basePass + "|" + session_key + "|" + UUID, headers);
+
+        if(request.getStatus() == 200){
+            String WI = request.getBody();
+            return WI;
+        }
+        else return null;
+    }
+
+    /**
      * <b>Request Connection</b>
      * <p>Given a camera and session key, get a direct address to the camera</p>
      * @param session_key the temporary string session key that allows the client to access services
@@ -97,6 +120,5 @@ public class Operations {
 
         return new Authenticator (userID, sessionKey, status, isAuthenticated);
     }
-
 
 }
