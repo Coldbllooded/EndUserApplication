@@ -3,6 +3,7 @@ package com.FerrisIOT;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class RTSPStreamContainer extends JPanel {
 
