@@ -5,6 +5,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 //Updated class name to OPERATIONS because if we want to put more things here that do more things, and those things perform http operations, hence OPERATIONS
 
@@ -61,6 +62,24 @@ public class Operations {
             return WI;
         }
         else return null;
+    }
+
+    /**
+     *
+     * @param Sound
+     * @param basePass
+     * @param SpeakerNumber
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws KeyManagementException
+     */
+    public static void playSpeaker(AtomicInteger Sound, String basePass, Integer SpeakerNumber) throws IOException, NoSuchAlgorithmException, KeyManagementException {
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("request", "speaker");
+
+        Https.Request Play = Https.post(Main.URL,basePass + "|"+ Main.authenticator.getSessionKey() + "|" + SpeakerNumber + "|" +Sound, headers);
+
+        return;
     }
 
     /**

@@ -23,10 +23,10 @@ public class Stream extends JFrame {
             InBOX.add(new NoSensors());
 
         //Create Speaker Grid
-        //if(Speak > 0)
-            //InBOX.add(new Speaker(Operations.requestSpeaker(sInfo.getBasePass(), Main.authenticator.getSessionKey(), sInfo.getUuid())));
-        //else
-            //InBOX.add(new NoSpeaker());
+        if(Speak > 0)
+            InBOX.add(new Speaker(sInfo.getBasePass(), Speak));
+        else
+            InBOX.add(new NoSpeaker());
         //Create Memory Used Form
         JTextPane Percent = new JTextPane();
         Percent.setText(Memory + "%");
