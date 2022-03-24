@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Speaker extends JFrame{
     private JPanel Sounds;
-    Speaker(String basePass, int speakerNumber)
+    Speaker(String basePass, int speakerNumber, String Serial)
     {
         JPanel SpeakerGrid = new JPanel();
         //Generate Grid of playable noises
@@ -18,35 +18,7 @@ public class Speaker extends JFrame{
         Bleep.addActionListener(e ->{
             sound.set(1);
             try {
-                Operations.playSpeaker(sound, basePass, speakerNumber);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (NoSuchAlgorithmException ex) {
-                ex.printStackTrace();
-            } catch (KeyManagementException ex) {
-                ex.printStackTrace();
-            }
-        });
-        JButton Moow = new JButton();
-        Moow.setText("Moow");
-        Moow.addActionListener(e ->{
-            sound.set(2);
-            try {
-                Operations.playSpeaker(sound, basePass, speakerNumber);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (NoSuchAlgorithmException ex) {
-                ex.printStackTrace();
-            } catch (KeyManagementException ex) {
-                ex.printStackTrace();
-            }
-        });
-        JButton No = new JButton();
-        No.setText("No");
-        No.addActionListener(e ->{
-            sound.set(3);
-            try {
-                Operations.playSpeaker(sound, basePass, speakerNumber);
+                Operations.playSpeaker(sound, basePass, Serial, String.valueOf(speakerNumber));
             } catch (IOException ex) {
                 ex.printStackTrace();
             } catch (NoSuchAlgorithmException ex) {

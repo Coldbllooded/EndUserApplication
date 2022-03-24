@@ -1,5 +1,7 @@
 package com.FerrisIOT;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import java.awt.*;
@@ -13,30 +15,29 @@ import java.util.LinkedList;
 
 public class Login extends JFrame {
     private JFormattedTextField formattedTextField1;
-    private JFormattedTextField formattedTextField2;
     private JButton enterButton;
     private JPanel Log;
+    private JPasswordField passwordField1;
+    private JLabel Pass;
+    private JLabel User;
+    private JPanel UserSection;
+    private JPanel PasswordSection;
 
     Login(){
+
         try {
             System.out.println(Https.get(Main.URL, new HashMap<>()).getBody());
         } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
         }
-        Image Icon = new javax.swing.ImageIcon("C:\\Users\\darth\\Desktop\\Senior Projects\\Bulldog.png").getImage();
+        Image Icon = new ImageIcon("C:\\Users\\darth\\Desktop\\Senior Projects\\Bulldog.png").getImage();
         this.setIconImage(Icon);
-        enterButton.setBorder(new AbstractBorder() {
-            @Override
-            public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-                super.paintBorder(c, g, x, y, width, height);
-            }
-        });
         this.setVisible(true);
         this.setContentPane(Log);
-        this.setSize(new Dimension(1000, 500));
-        this.setResizable(false);
+        this.setMinimumSize(new Dimension(700,500));
+        this.setResizable(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        formattedTextField2.addKeyListener(new KeyAdapter()
+        passwordField1.addKeyListener(new KeyAdapter()
         {
             @Override
             public void keyPressed(KeyEvent e)
@@ -44,7 +45,7 @@ public class Login extends JFrame {
                 if(e.getKeyCode()==KeyEvent.VK_ENTER)
                 {
                     String U = formattedTextField1.getText();
-                    String P = formattedTextField2.getText();
+                    String P = passwordField1.getText();
                     //Removed URL from this context for easy manipulation
 
                     try {
@@ -84,7 +85,7 @@ public class Login extends JFrame {
             //Get values from form
             //Check Credentials
             String U = formattedTextField1.getText();
-            String P = formattedTextField2.getText();
+            String P = passwordField1.getText();
 
             try {
                 Main.authenticator = Operations.authenticateUser(U, P);
@@ -119,6 +120,7 @@ public class Login extends JFrame {
     }
     public static void CreateLogin()
     {
+        FlatLightLaf.setup();
         new Login();
     }
 }

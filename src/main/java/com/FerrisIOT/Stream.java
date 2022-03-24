@@ -13,7 +13,7 @@ public class Stream extends JFrame {
         InBOX = new JFrame();
         //Create Camera Stream
         System.out.println(sInfo.getCamStream());
-        RTSPStreamContainer x = new RTSPStreamContainer(sInfo.getCamStream()+Cam,1000,100);
+        RTSPStreamContainer x = new RTSPStreamContainer((sInfo.getCamStream()+"S0"),1000,100);
         InBOX.add(x);
 
         //Create Weather Stream
@@ -24,7 +24,7 @@ public class Stream extends JFrame {
 
         //Create Speaker Grid
         if(Speak > 0)
-            InBOX.add(new Speaker(sInfo.getBasePass(), Speak));
+            InBOX.add(new Speaker(sInfo.getBasePass(), Speak, sInfo.getUuid()));
         else
             InBOX.add(new NoSpeaker());
         //Create Memory Used Form

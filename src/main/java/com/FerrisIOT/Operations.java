@@ -68,16 +68,16 @@ public class Operations {
      *
      * @param Sound
      * @param basePass
-     * @param SpeakerNumber
+     * @param Serial
      * @throws IOException
      * @throws NoSuchAlgorithmException
      * @throws KeyManagementException
      */
-    public static void playSpeaker(AtomicInteger Sound, String basePass, Integer SpeakerNumber) throws IOException, NoSuchAlgorithmException, KeyManagementException {
+    public static void playSpeaker(AtomicInteger Sound, String basePass, String Serial, String SpeakerNumber) throws IOException, NoSuchAlgorithmException, KeyManagementException {
         HashMap<String, String> headers = new HashMap<>();
-        headers.put("request", "speaker");
+        headers.put("solicit", "speaker");
 
-        Https.Request Play = Https.post(Main.URL,basePass + "|"+ Main.authenticator.getSessionKey() + "|" + SpeakerNumber + "|" +Sound, headers);
+        Https.Request Play = Https.post( Serial + Main.URL,basePass +"|" +Main.authenticator.getUserID() +"|"+ Main.authenticator.getSessionKey() + "|" + SpeakerNumber , headers);
 
         return;
     }

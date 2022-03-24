@@ -77,9 +77,9 @@ public class Select extends JFrame {
                 }
                 SpeakerSelect.revalidate();
             }
-            System.out.println(stationInfo.getName());
+            //System.out.println(stationInfo.getName());
             JButton NB = new JButton(stationInfo.getName());
-            System.out.println(NB);
+            //System.out.println(NB);
             Grid.add(NB);
             NB.addActionListener(e -> {
                 try {
