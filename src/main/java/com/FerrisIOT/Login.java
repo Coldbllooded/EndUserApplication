@@ -2,11 +2,14 @@ package com.FerrisIOT;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -22,6 +25,8 @@ public class Login extends JFrame {
     private JLabel User;
     private JPanel UserSection;
     private JPanel PasswordSection;
+    private JLabel Logo;
+    private JPanel LOGO;
 
     Login(){
 
@@ -32,6 +37,7 @@ public class Login extends JFrame {
         }
         Image Icon = new ImageIcon("C:\\Users\\darth\\Desktop\\Senior Projects\\Bulldog.png").getImage();
         this.setIconImage(Icon);
+        Logo.setIcon(new ImageIcon("C:\\Users\\darth\\Desktop\\FerrisIOTShieldLogo.png"));
         this.setVisible(true);
         this.setContentPane(Log);
         this.setMinimumSize(new Dimension(700,500));
@@ -52,13 +58,14 @@ public class Login extends JFrame {
                         Main.authenticator = Operations.authenticateUser(U, P);
                     } catch (IOException | NoSuchAlgorithmException | KeyManagementException ex) {
                         ex.printStackTrace();
+                        JOptionPane.showMessageDialog(Log, "Incorrect Login Credentials");
                     }
 
                     assert Main.authenticator != null;
                     if (!Main.authenticator.isAuthenticated())
                     {
-                        System.out.println("Incorrect login detected");
-                        new IncorrectCredentials();
+                        //System.out.println("Incorrect login detected");
+                        JOptionPane.showMessageDialog(Log, "Incorrect Login Credentials");
                     }
                     else
                     {
@@ -91,13 +98,15 @@ public class Login extends JFrame {
                 Main.authenticator = Operations.authenticateUser(U, P);
             } catch (IOException | KeyManagementException | NoSuchAlgorithmException ex) {
                 ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Incorrect Login Credentials");
+
             }
 
             assert Main.authenticator != null;
             if (!Main.authenticator.isAuthenticated())
             {
-                System.out.println("Incorrect login detected");
-                new IncorrectCredentials();
+                //System.out.println("Incorrect login detected");
+                JOptionPane.showMessageDialog(this, "Incorrect Login Credentials");
             }
             else
             {
@@ -118,8 +127,7 @@ public class Login extends JFrame {
             }
         });
     }
-    public static void CreateLogin()
-    {
+    public static void CreateLogin() {
         FlatLightLaf.setup();
         new Login();
     }

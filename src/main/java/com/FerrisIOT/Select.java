@@ -1,6 +1,7 @@
 package com.FerrisIOT;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -18,6 +19,8 @@ public class Select extends JFrame {
             this.dispose();
         });
         this.setContentPane(choose);
+        Image Icon = new ImageIcon("C:\\Users\\darth\\Desktop\\Senior Projects\\Bulldog.png").getImage();
+        this.setIconImage(Icon);
         this.setSize(1000,500);
         this.setVisible(true);
 
