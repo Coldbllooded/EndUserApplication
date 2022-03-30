@@ -6,7 +6,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Speaker extends JFrame{
+public class Speaker extends JPanel{
     private JPanel Sounds;
     Speaker(String basePass, int speakerNumber, String Serial)
     {

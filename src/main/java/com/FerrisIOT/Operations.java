@@ -51,11 +51,11 @@ public class Operations {
      * @throws NoSuchAlgorithmException
      * @throws KeyManagementException
      */
-    public static String requestWeather(String basePass, String session_key, String UUID) throws IOException, NoSuchAlgorithmException, KeyManagementException {
+    public static String requestWeather(String basePass, String session_key, String UUID, int user_id ) throws IOException, NoSuchAlgorithmException, KeyManagementException {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("request", "weather");
 
-        Https.Request request = Https.post(Main.URL,  basePass + "|" + session_key + "|" + UUID, headers);
+        Https.Request request = Https.post(Main.URL,  UUID + "|" + basePass + "|" + user_id + "|" + session_key, headers);
 
         if(request.getStatus() == 200){
             String WI = request.getBody();

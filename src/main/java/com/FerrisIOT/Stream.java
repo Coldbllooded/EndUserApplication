@@ -8,40 +8,69 @@ import java.security.NoSuchAlgorithmException;
 
 public class Stream extends JFrame {
     private JPanel Box;
-    private JFrame InBOX;
+    private JPanel Camera;
+    private JPanel WeathInfo;
+    private JPanel SpeakerButton;
 
     Stream(StationInfo sInfo, int Memory, int Cam, int Weat, int Speak) throws IOException, NoSuchAlgorithmException, KeyManagementException {
-        InBOX = new JFrame();
-        JOptionPane NoWeather = new JOptionPane("No Weather Data Available");
+        JOptionPane NoWeather = new JOptionPane("No WeatherPane Data Available");
         JOptionPane NoSpeaker = new JOptionPane("No Speakers are Available");
+        JOptionPane NoCameras = new JOptionPane("No Cameras Streams are Available");
+        this.setContentPane(Box);
+
+        //Create WeatherPane Stream
+        if (Weat > 0) {
+            WeatherPanel PIP = new WeatherPanel();
+            System.out.println("Created new WeatherPane");
+            System.out.println("Added PIP to WEATHPANE");
+            PIP.setWeatherData(Objects.requireNonNull(Operations.requestWeather(sInfo.getBasePass(), Main.authenticator.getSessionKey(), sInfo.getUuid(), Main.authenticator.getUserID())));
+            System.out.println("Got server's last weather reading");
+            ActionListener listener = e -> {
+                try {
+                    PIP.setWeatherData(Objects.requireNonNull(Operations.requestWeather(sInfo.getBasePass(), Main.authenticator.getSessionKey(), sInfo.getUuid(), Main.authenticator.getUserID())));
+                } catch (IOException | NoSuchAlgorithmException | KeyManagementException ex) {
+                    ex.printStackTrace();
+                }
+            };
+            Timer timer = new Timer(7000, listener);
+            System.out.println("Setup new timer");
+            timer.start();
+            WeathInfo.setVisible(true);
+            System.out.println("Set WeathInfo visible");
+
+            WeathInfo.add(PIP);
 
 
-        //Create Weather Stream
-        if (Weat > 0)
-            InBOX.add(new Weather(Operations.requestWeather(sInfo.getBasePass(),Main.authenticator.getSessionKey(),sInfo.getUuid())));
+        }
+
         else
-            InBOX.add(NoWeather);
 
+/*
         //Create Speaker Grid
         if(Speak > 0)
-            InBOX.add(new Speaker(sInfo.getBasePass(), Speak, sInfo.getUuid()));
+            Speaker.add(new Speaker(sInfo.getBasePass(), Speak, sInfo.getUuid()));
         else
-            InBOX.add(NoSpeaker);
+            Speaker.add(NoSpeaker);
 
         //Create Camera Stream
-        System.out.println(sInfo.getCamStream());
-        RTSPStreamContainer x = new RTSPStreamContainer((sInfo.getCamStream()+"S0"),1000,100);
-        InBOX.add(x);
+        if(Cam > 0) {
+            System.out.println(sInfo.getCamStream());
+            RTSPStreamContainer x = new RTSPStreamContainer((sInfo.getCamStream() + Cam), 1000, 100);
+            Camera.add(x);
+            x.playStream();
+        }
+        else
+        {
+            Camera.add(NoCameras);
+        }
+
+         */
 
         //Create Memory Used Form
-        JTextPane Percent = new JTextPane();
-        Percent.setText(Memory + "%");
-        Image Icon = new ImageIcon("C:\\Users\\darth\\Desktop\\Senior Projects\\Bulldog.png").getImage();
-        this.setIconImage(Icon);
-        InBOX.add(Percent);
-        InBOX.setVisible(true);
-        x.playStream();
-
+        //Box.add(Camera);
+        //Box.add(Speaker);
+        //Box.add(Weather);
+        Box.setVisible(true);
     }
 
 }

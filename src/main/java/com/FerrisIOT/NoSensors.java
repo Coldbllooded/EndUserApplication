@@ -7,7 +7,7 @@ public class NoSensors extends JPanel{
     {
         JPanel No = new JPanel();
         JTextPane Text = new JTextPane();
-        Text.setText("No Weather Sensors are Connected");
+        Text.setText("No WeatherPane Sensors are Connected");
         No.add(Text);
         No.setVisible(true);
     }
