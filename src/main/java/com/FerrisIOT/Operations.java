@@ -5,7 +5,6 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 //Updated class name to OPERATIONS because if we want to put more things here that do more things, and those things perform http operations, hence OPERATIONS
 
@@ -46,10 +45,10 @@ public class Operations {
      * @param basePass Base Station Password
      * @param session_key   Session ID
      * @param UUID  Camera ID
-     * @return
-     * @throws IOException
-     * @throws NoSuchAlgorithmException
-     * @throws KeyManagementException
+     * @return WI if not NULL
+     * @throws IOException exception
+     * @throws NoSuchAlgorithmException exception
+     * @throws KeyManagementException exception
      */
     public static String requestWeather(String basePass, String session_key, String UUID, int user_id ) throws IOException, NoSuchAlgorithmException, KeyManagementException {
         HashMap<String, String> headers = new HashMap<>();
@@ -66,20 +65,17 @@ public class Operations {
 
     /**
      *
-     * @param Sound
-     * @param basePass
-     * @param Serial
-     * @throws IOException
-     * @throws NoSuchAlgorithmException
-     * @throws KeyManagementException
+     * @param basePass base station password
+     * @param Serial base station serial number
+     * @throws IOException  exception
+     * @throws NoSuchAlgorithmException exception
+     * @throws KeyManagementException   exception
      */
-    public static void playSpeaker(AtomicInteger Sound, String basePass, String Serial, String SpeakerNumber) throws IOException, NoSuchAlgorithmException, KeyManagementException {
+    public static void playSpeaker(String basePass, String Serial) throws IOException, NoSuchAlgorithmException, KeyManagementException {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("solicit", "speaker");
 
-        Https.Request Play = Https.post( Serial + Main.URL,basePass +"|" +Main.authenticator.getUserID() +"|"+ Main.authenticator.getSessionKey() + "|" + SpeakerNumber , headers);
-
-        return;
+        Https.Request Play = Https.post( Serial + Main.URL,basePass +"|" +Main.authenticator.getUserID() +"|"+ Main.authenticator.getSessionKey(), headers);
     }
 
     /**
@@ -103,22 +99,13 @@ public class Operations {
 
     }
 
-    /**
-     * <b>RECORD Authentication</b>
-     * <p>The Authentication Record is generated whenever the user logs in. Stored here is a set of values to use after a user authenticates</p>
-     * @param isAuthenticated {@code TRUE} when the user authenticates, {@code FALSE} when there is an error
-     * @param sessionKey The unique session key that generates when a user logs in, and is used for completing requests of various data
-     * @param id The User's ID, unique to them
-     * @param status_code The Status code of the POST made for the authentication. Used if {@code isAuthenticated} is {@code FALSE} to determine the cause of failure
-     */
-
 
     /**
      * <b>METHOD AUTHENTICATE USER</b>
      * <p>Attempts to contact the main server for authentication, given a username and password</p>
      * @param username The user's username
      * @param password The user's password
-     * @return An Authentication object filled with information about status, if authentication completed sucessfully, the user ID and the session key.
+     * @return An Authentication object filled with information about status, if authentication completed successfully, the user ID and the session key.
      * @throws IOException if the connection was broken or interrupted
      */
     public static Authenticator authenticateUser(String username, String password) throws IOException, NoSuchAlgorithmException, KeyManagementException {

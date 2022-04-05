@@ -69,6 +69,7 @@
             </constraints>
             <properties>
               <horizontalAlignment value="2"/>
+              <text value="DEFAULT"/>
             </properties>
           </component>
         </children>
@@ -114,7 +115,7 @@
             <properties>
               <echoChar value="*"/>
               <horizontalAlignment value="2"/>
-              <text value=""/>
+              <text value="DEFAULT"/>
             </properties>
           </component>
         </children>
