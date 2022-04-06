@@ -15,7 +15,7 @@ public class StationInfo {
         this.Status = Status;
         this.Owner = Owner;
 
-        CamStream = "rtsp://" + this.Owner + ":" + this.basePass + "@triagecore.com:8554/" + this.uuid + "/";
+        CamStream = "rtsp://triagecore.com:8554/" + this.uuid + "/";
     }
 
     public String getUuid() { return this.uuid; }

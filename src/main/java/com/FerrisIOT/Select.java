@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Select extends JFrame {
     private JPanel choose;
@@ -40,11 +39,8 @@ public class Select extends JFrame {
                     Stream G = new Stream(stationInfo, mem, CamSel, WeatherSel, SpeakerSel);
                     G.setSize(800,1000);
                     G.setVisible(true);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (NoSuchAlgorithmException ex) {
-                    ex.printStackTrace();
-                } catch (KeyManagementException ex) {
+                    G.STREAMPLAY();
+                } catch (IOException | NoSuchAlgorithmException | KeyManagementException ex) {
                     ex.printStackTrace();
                 }
 

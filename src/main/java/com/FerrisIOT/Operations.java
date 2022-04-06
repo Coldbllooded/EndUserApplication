@@ -75,7 +75,9 @@ public class Operations {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("solicit", "speaker");
 
-        Https.Request Play = Https.post( Serial + Main.URL,basePass +"|" +Main.authenticator.getUserID() +"|"+ Main.authenticator.getSessionKey(), headers);
+        System.out.println(Serial +"|"+ basePass +"|" +Main.authenticator.getUserID() +"|"+ Main.authenticator.getSessionKey());
+        Https.Request Play = Https.post(Main.URL,Serial +"|"+ basePass +"|" +Main.authenticator.getUserID() +"|"+ Main.authenticator.getSessionKey(), headers);
+
     }
 
     /**
