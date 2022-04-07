@@ -5,8 +5,8 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 import javax.swing.*;
 import java.awt.*;
 
-public class RTSPStreamContainer extends JInternalFrame {
-
+public class TEST extends JFrame {
+    private JPanel Holder;
     /*
     REQUIRES following maven dependency:
 
@@ -31,7 +31,7 @@ public class RTSPStreamContainer extends JInternalFrame {
      * @param address
      * @param size
      */
-    RTSPStreamContainer(String address, Dimension size){
+    TEST(String address, Dimension size){
         this.address = address;
         this.mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
         super.add(this.mediaPlayerComponent);
@@ -40,7 +40,7 @@ public class RTSPStreamContainer extends JInternalFrame {
         super.setVisible(true);
     }
 
-    RTSPStreamContainer(String address, int width, int height){
+    TEST(String address, int width, int height){
         this.address = address;
         this.mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
         super.add(this.mediaPlayerComponent);
@@ -50,7 +50,7 @@ public class RTSPStreamContainer extends JInternalFrame {
     }
 
 
-    public void playStream(){
+    public void layStream(){
         this.mediaPlayerComponent.mediaPlayer().media().play(this.address);
     }
 
@@ -62,6 +62,4 @@ public class RTSPStreamContainer extends JInternalFrame {
     public String getCurrentAddress(){
         return this.address;
     }
-
-
 }

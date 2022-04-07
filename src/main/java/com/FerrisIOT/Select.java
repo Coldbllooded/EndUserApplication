@@ -40,6 +40,7 @@ public class Select extends JFrame {
                     G.setSize(800,1000);
                     G.setVisible(true);
                     G.STREAMPLAY();
+
                 } catch (IOException | NoSuchAlgorithmException | KeyManagementException ex) {
                     ex.printStackTrace();
                 }
@@ -48,6 +49,7 @@ public class Select extends JFrame {
 
 
         }
+
         Grid.revalidate();
         Grid.setVisible(true);
         choose.setVisible(true);

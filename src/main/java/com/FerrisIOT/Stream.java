@@ -1,6 +1,7 @@
 package com.FerrisIOT;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -17,14 +18,19 @@ public class Stream extends JFrame {
     RTSPStreamContainer x = null;
 
     Stream(StationInfo sInfo, int Memory, int Cam, int Weat, int Speak) throws IOException, NoSuchAlgorithmException, KeyManagementException {
+        ImageIcon WhiteSpace = new ImageIcon("C:\\Users\\darth\\Desktop\\Senior Projects\\WhiteSpace.png");
         Font Type1 = new Font("Bernard MT Condensed", BOLD, 20);
         //Create Camera Stream
         if(Cam > 0)
         {
+
             System.out.println(sInfo.getCamStream());
-            this.x = new RTSPStreamContainer((sInfo.getCamStream() + "S0"), 1000, 100);
+            this.x = new RTSPStreamContainer((sInfo.getCamStream() + "S0"), 1000, 1000);
+            x.setResizable(true);
+            x.setBorder(null);
+            x.setFrameIcon(WhiteSpace);
+            x.setClosable(false);
             Camera.add(x);
-            Camera.setBackground(Color.GRAY);
 
         }
         else
@@ -40,6 +46,7 @@ public class Stream extends JFrame {
         if(Speak > 0)
         {
             JButton PLAY = new JButton("Play Sound");
+            PLAY.setFont(Type1);
             PLAY.setBackground(Color.GRAY);
             PLAY.addActionListener(e-> {
                 try {
@@ -69,12 +76,15 @@ public class Stream extends JFrame {
             Humid = chop(Humid);
             Humid = chop(Humid);
             JLabel Pressure = new JLabel("Pressure: " + Press);
+            Pressure.setFont(Type1);
             Pressure.setForeground(Color.BLACK);
             JLabel Temperature = new JLabel("Temperature: " + Temp + "F");
+            Temperature.setFont(Type1);
             Temperature.setForeground(Color.BLACK);
             JLabel Humidity = new JLabel("Humidity: " + Humid + "%");
+            Humidity.setFont(Type1);
             Humidity.setForeground(Color.BLACK);
-            WeatherInfo.setBackground(Color.GRAY);
+            WeatherInfo.setBackground(Color.white);
             WeatherInfo.add(Pressure);
             WeatherInfo.add(Temperature);
             WeatherInfo.add(Humidity);
@@ -86,9 +96,11 @@ public class Stream extends JFrame {
             WeatherInfo.setBackground(Color.GRAY);
             WeatherInfo.add(NOWEATHER);
         }
-        //Main Container Set Visible and Max size
+        //PIR Sensor
 
+        //Main Container Set Visible and Minimum size
         this.setSize(1000,1030);
+        this.setMinimumSize(new Dimension(700,1000));
         this.setContentPane(Box);
     }
 
@@ -96,7 +108,6 @@ public class Stream extends JFrame {
         if(x != null)
         {
             x.playStream();
-            x.setVisible(true);
         }
     }
 
