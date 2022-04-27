@@ -10,6 +10,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Login extends JFrame {
     private JFormattedTextField formattedTextField1;
@@ -30,9 +31,12 @@ public class Login extends JFrame {
         } catch (IOException | NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
         }
-        Image Icon = new ImageIcon("C:\\Users\\darth\\Desktop\\Senior Projects\\Bulldog.png").getImage();
-        this.setIconImage(Icon);
-        Logo.setIcon(new ImageIcon("C:\\Users\\darth\\Desktop\\FerrisIOTShieldLogo.png"));
+        //Image Icon = new ImageIcon("C:\\Users\\darth\\Desktop\\Senior Projects\\Bulldog.png").getImage();
+        Image icon = new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/Bulldog.png"))).getImage();
+        this.setIconImage(icon);
+
+        Logo.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/FerrisIOTShieldLogo.png"))));
+
         this.setVisible(true);
         this.setContentPane(Log);
         this.setMinimumSize(new Dimension(700,500));

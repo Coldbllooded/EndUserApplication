@@ -1,5 +1,7 @@
 package com.FerrisIOT;
 
+import org.eclipse.paho.client.mqttv3.MqttException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -42,6 +44,8 @@ public class Select extends JFrame {
                     G.STREAMPLAY();
 
                 } catch (IOException | NoSuchAlgorithmException | KeyManagementException ex) {
+                    ex.printStackTrace();
+                } catch (MqttException ex) {
                     ex.printStackTrace();
                 }
 

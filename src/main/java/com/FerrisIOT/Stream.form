@@ -7,6 +7,9 @@
     <properties>
       <background color="-459265"/>
       <foreground color="-459265"/>
+      <maximumSize width="100" height="100"/>
+      <minimumSize width="40" height="40"/>
+      <preferredSize width="40" height="40"/>
     </properties>
     <border type="none" title=""/>
     <children>
@@ -21,7 +24,9 @@
         </constraints>
         <properties>
           <background color="-459265"/>
-          <maximumSize width="1000" height="500"/>
+          <maximumSize width="2000" height="1500"/>
+          <preferredSize width="1000" height="1000"/>
+          <requestFocusEnabled value="true"/>
         </properties>
         <border type="none"/>
         <children/>
@@ -33,7 +38,7 @@
             <preferred-size width="500" height="30"/>
             <maximum-size width="500" height="30"/>
           </grid>
-          <gridbag weightx="1.0" weighty="1.0"/>
+          <gridbag weightx="0.2" weighty="0.1"/>
         </constraints>
         <properties>
           <background color="-459265"/>
@@ -49,11 +54,26 @@
             <preferred-size width="500" height="30"/>
             <maximum-size width="500" height="30"/>
           </grid>
-          <gridbag weightx="1.0" weighty="1.0"/>
+          <gridbag weightx="0.2" weighty="0.1"/>
         </constraints>
         <properties>
           <background color="-459265"/>
           <maximumSize width="500" height="50"/>
+        </properties>
+        <border type="none"/>
+        <children/>
+      </grid>
+      <grid id="51c7a" binding="PirSensor" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.2" weighty="0.05"/>
+        </constraints>
+        <properties>
+          <background color="-459265"/>
+          <foreground color="-459265"/>
+          <maximumSize width="100" height="100"/>
+          <minimumSize width="40" height="40"/>
+          <preferredSize width="40" height="40"/>
         </properties>
         <border type="none"/>
         <children/>

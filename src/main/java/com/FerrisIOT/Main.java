@@ -6,6 +6,7 @@ public class Main {
     public static Authenticator authenticator = null;
     public static void main(String[] args) {
 	// write your code here
+
         Login.CreateLogin();
     }
 }
